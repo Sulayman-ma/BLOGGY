@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block page_name %}Edit Your Profile{% endblock %}
+
+{% block body %}
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        <div class="detail">
+            {{ form.name.label }}
+            {{ form.name(size = '58') }}
+        </div>
+
+        <div class="detail">
+            {{ form.location.label }}
+            {{ form.location(size = '58') }}
+        </div>
+
+        <div class="detail">
+            {{ form.about_me.label }}
+            {{ form.about_me(width = '100%') }}
+        </div>
+
+        <div class="last">
+            {{ form.submit() }}
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block style %}
+
+    form{
+        width: 90%;
+        margin: auto;
+        font-weight: bold;
+    }
+
+    .detail{
+        display: block;
+        margin: 40px 0 10px 0;
+    }
+
+    .detail input, textarea{
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        border-color: black;
+        outline: none;
+        float: right;
+    }
+
+<!--    textarea{-->
+<!--        border-width: 0 0 1px 0;-->
+<!--        border-style: solid;-->
+<!--        border-color: black;-->
+<!--        outline: none;-->
+<!--        margin-left: 50px;-->
+<!--        height: 50px;-->
+<!--        width: 350px;-->
+<!--    }-->
+
+    .last{
+        width: 25%;
+    }
+
+    .last *{
+        margin: 30px 0 0 0;
+    }
+
+{% endblock %}

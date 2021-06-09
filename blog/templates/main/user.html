@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block page_name %}Profile{% endblock %}
+
+{% block body %}
+
+    <h1>{{ user.username | capitalize }}</h1>
+    {% if user.name %}
+        <p>{{ user.name }}</p>
+    {% endif %}
+
+    {% if user.is_administrator() %}
+        <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+    {% endif %}
+
+    {% if user.about_me %}
+        <p>{{ user.about_me }}</p>
+    {% endif %}
+
+    <p>
+        Member since - {{ user.member_since.strftime('%d %B, %Y') }}.
+    </p>
+
+    <p>
+        Last seen - {{ user.last_seen.strftime('%X%p') }}.
+    </p>
+
+    {% if user == current_user %}
+        <a href="{{ url_for('.edit_profile') }}" style="text-decoration:none;">
+            Edit Profile
+        </a>
+    {% endif %}
+
+    {% if current_user.is_administrator() %}
+        <a href="{{ url_for('.edit_profile_admin', user_id=user.id) }}"
+        style="color:red; text-decoration:none;">
+            Edit Profile [Admin]
+        </a>
+    {% endif %}
+
+    {% include "_posts.html" %}
+
+{% endblock %}

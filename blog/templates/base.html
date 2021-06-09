@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - BLOGGY</title>
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="flash">
+        {% for msg in get_flashed_messages() %}
+        <div class="flash-msg">
+            {{ msg }}
+            <input value="❌" type="button" id="close">
+        </div>
+        {% endfor %}
+    </div>
+
+    <header>
+        <h1>BLOGGY</h1>
+        <nav class="nav">
+            <li><a href="{{ url_for('main.index') }}">Home</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('main.user',
+                             username = current_user.username) }}">
+                    Profile</a>
+                </li>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1 class="page-name">{% block page_name %}{% endblock %}</h1>
+        <hr>
+
+        {% block body %}{% endblock %}
+    </div>
+
+    <style>
+        {% block style %}{% endblock %}
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .main-container{
+            width: 80%;
+            margin: auto;
+        }
+
+        .page-name{
+            font-size: 2.5rem;
+            font-weight: lighter;
+        }
+
+        header{
+            display: flex;
+            background-color: rgb(54, 54, 54);
+            color: rgb(255, 255, 255);
+            position: relative;
+            padding: 20px;
+            margin-bottom: 50px;
+        }
+
+        header .nav{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 10px;
+        }
+
+        .nav a{
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            padding: 20px 20px;
+        }
+
+        .nav a:hover{
+            transition: 0.25s;
+            background-color: rgba(0, 0, 0, 0.17);
+        }
+
+        li{
+            list-style: none;
+            margin: 7px 0 0 0;
+        }
+
+        .flash{
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            padding: 5px 5px;
+        }
+
+        .flash .flash-msg input{
+            border: none;
+            outline: none;
+            background-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+        }
+
+        .posts{
+            margin-top: 50px;
+        }
+
+        .post{
+            padding: 5px;
+            position: relative;
+            border-width: 0 0 1px 0;
+            border-color: grey;
+            border-style: solid;
+        }
+
+        .post h3 a{
+            text-decoration: none;
+            color: blue;
+        }
+
+        .post .post-date{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .post .post-body{
+            padding: 10px;
+        }
+    </style>
+
+    <script>
+        var btn = document.querySelector("#close");
+        btn.addEventListener("click", () => {
+            event.target.parentElement.parentElement.remove()
+        })
+    </script>
+</body>
+
+</html>

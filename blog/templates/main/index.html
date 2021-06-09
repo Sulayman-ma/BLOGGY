@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block page_name %}Home{% endblock %}
+
+{% block style %}
+
+    form{
+        width: 100%;
+        margin: auto;
+        font-weight: bold;
+        position: relative;
+    }
+
+    .detail textarea{
+        width: 100%;
+        height: 90px;
+        outline: none;
+        resize: none;
+        padding: 5px;
+    }
+
+    .detail input{
+        position: absolute;
+        left: 0;
+        padding: 5px 10px;
+    }
+
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="welcome">
+        Welcome,
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}
+        {% else %}
+            Stranger
+        {% endif %}!
+    </h1>
+
+    <div>
+        {% if current_user.can(Permission.WRITE) %}
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="detail">
+                {{ form.body(placeholder = "What's on your mind?") }}
+                {{ form.submit() }}
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+    {% include "_posts.html" %}
+
+{% endblock %}

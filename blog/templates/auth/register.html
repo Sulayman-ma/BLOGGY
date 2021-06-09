@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block page_name %}Register{% endblock %}
+
+{% block body %}
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="detail">
+            {{ form.email.label }}
+            {{ form.email(size = '50') }}
+        </div>
+
+        <div class="detail">
+            {{ form.username.label }}
+            {{ form.username(size = '50') }}
+        </div>
+
+        <div class="detail">
+            {{ form.password.label }}
+            {{ form.password(size = '50') }}
+        </div>
+
+        <div class="detail">
+            {{ form.password2.label }}
+            {{ form.password2(size = '50') }}
+        </div>
+
+        <div class="last">
+            {{ form.submit() }}
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block style %}
+
+    form{
+        width: 90%;
+        margin: auto;
+        font-weight: bold;
+    }
+
+    .detail{
+        display: block;
+        margin: 40px 0;
+    }
+
+    .detail input{
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        border-color: black;
+        outline: none;
+        float: right;
+    }
+
+    .last{
+        width: 25%;
+    }
+
+    .last input{
+        padding: 5px 10px;
+        margin-top: 0;
+    }
+
+{% endblock %}

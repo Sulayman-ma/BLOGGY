@@ -1,0 +1,87 @@
+<style>
+    .post{
+        position: relative;
+        margin: 0 0 20px 0;
+    }
+
+    .post-author a{
+        text-decoration: none;
+        color: blue;
+        font-size: 1.3rem;
+    }
+
+    .post-date{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    .post-body a{
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+    }
+
+    .post-footer{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .post-footer .permalink{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        padding: 5px 5px;
+        background-color: rgb(54, 54, 54);
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+    .post-footer .edit{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        padding: 5px 5px;
+        background-color: rgb(55, 102, 149);
+        border-radius: 5px;
+    }
+</style>
+
+<div class="posts">
+
+   {% for post in posts %}
+        <li class="post">
+            <div class="post-author">
+                <a
+                href="{{ url_for('.user', username = post.author.username) }}">
+                    {{ post.author.username }}
+                </a>
+            </div>
+            <div  class="post-date">
+                <h5>
+                    {{ post.timestamp.strftime("%X%p") }}
+                </h5>
+            </div>
+            <div class="post-body">
+                <a href="{{ url_for('main.post',
+                            post_id = post.id, _external=True) }}">
+                    {{ post.body }}
+                </a>
+            </div>
+            <div class="post-footer">
+                {% if current_user == post.author %}
+                    <a class="edit" href="{{ url_for('.edit', post_id = post.id) }}">
+                        Edit
+                    </a>
+                {% elif current_user.is_administrator() %}
+                    <a class="edit" href="{{ url_for('.edit', post_id = post.id) }}">
+                        Edit [Admin]
+                    </a>
+                {% endif %}
+                <a class="permalink" href="{{ url_for('.post',
+                         post_id = post.id, _external=True) }}">
+                    Permalink
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+</div>
+
